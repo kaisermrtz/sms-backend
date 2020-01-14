@@ -1,5 +1,7 @@
 # README
 
+Note: for simplicity reasons the database is wiped and reseeded every time the server starts.
+
 ## Setup
 
 1) To setup add a config/config.json file like this one: 
