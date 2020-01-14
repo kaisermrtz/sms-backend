@@ -37,3 +37,31 @@ cd mongo/bin
 ```
 node server.js
 ```
+
+## Usage
+
+### POST /add
+
+Add a new entry by posting a json like this:
+```
+{
+	"id": 1234,
+	"city": "New City",
+	"start_date": "10/10/2010",
+	"end_date": "10/11/2010",
+	"price": "3.4",
+	"status": "Weekly",
+	"color": "#ababab"
+}
+```
+
+Returns the added object.
+
+### POST /update/:id
+
+Updates an entry by id and returns the updated object.
+Post a json like for `POST /add`
+
+### GET /delete/:id
+
+Deletes an object by id and returns the deleted object.
