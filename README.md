@@ -42,6 +42,10 @@ node server.js
 
 ## Usage
 
+### GET /
+
+Get an array of all data entries
+
 ### POST /add
 
 Add a new entry by posting a json like this:
