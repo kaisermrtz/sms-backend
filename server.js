@@ -35,6 +35,17 @@ app.get('/', async(req, res) => {
     }
 });
 
+// GET /:id
+app.get('/:id', async(req, res) => {
+    console.log('GET /:id');
+    try {
+        let dataPoint = await Model.findOne({id: req.params.id});
+        res.send(dataPoint);
+    } catch(error) {
+        res.status(400).send(error);
+    }
+});
+
 // POST /add
 app.post('/add', async(req, res) => {
     console.log('POST /add');
@@ -50,7 +61,7 @@ app.post('/add', async(req, res) => {
 
 // POST /update/:id
 app.post('/update/:id', async(req, res) => {
-    console.log('POST /update');
+    console.log('POST /update/:id');
     try {
         validateDataPoint(req.body)
         const data = await Model.findOneAndUpdate({id: req.params.id}, {$set: req.body}, {new: true});
@@ -62,7 +73,7 @@ app.post('/update/:id', async(req, res) => {
 
 // GET /delete/:id
 app.get('/delete/:id', async(req, res) => {
-    console.log('Post /delete');
+    console.log('POST /delete/:id');
     try {
         const data = await Model.findOneAndRemove({id: req.params.id});
         if (!data) {
