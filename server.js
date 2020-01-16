@@ -40,6 +40,9 @@ app.get('/:id', async(req, res) => {
     console.log('GET /:id');
     try {
         let dataPoint = await Model.findOne({id: req.params.id});
+        if (!dataPoint) {
+            throw 'Invalid id'
+        }
         res.send(dataPoint);
     } catch(error) {
         res.status(400).send(error);
