@@ -2,6 +2,7 @@ const expect = require('expect');
 const request = require('supertest');
 
 const {app} = require('./../server');
+const {Model} = require('./../models/model');
 const { seedDatabase } = require('./../seed/seed');
 
 const valideNewDatapoint = {
@@ -43,12 +44,7 @@ describe('GET /', () => {
             .expect((res) => {
                 expect(res.body.length).toBe(1000);
             })
-            .end((err, res) => {
-                if(err) {
-                    return done(err);
-                }
-                done();
-            });
+            .end(done);
     });
 });
 
@@ -61,7 +57,16 @@ describe('POST /add', () => {
             .expect((res) => {
                 expect(res.body.id).toBe(valideNewDatapoint.id);
             })
-            .end(done);
+            .end((err, res) => {
+                if(err) {
+                    return done(err);
+                }
+
+                Model.find({id: 1234}).then((data) => {
+                    expect(data.length).toBe(1);
+                    done();
+                }).catch((e) => done(e));
+            });
     });
 
     it('should reject empty body', (done) => {
@@ -98,7 +103,16 @@ describe('POST /update/:id', () => {
             .expect((res) => {
                 expect(res.body.id).toBe(valideNewDatapoint.id);
             })
-            .end(done);
+            .end((err, res) => {
+                if(err) {
+                    return done(err);
+                }
+
+                Model.find({id: 1234}).then((data) => {
+                    expect(data.length).toBe(1);
+                    done();
+                }).catch((e) => done(e));
+            });
     });
 
     it('should reject empty body', (done) => {
@@ -131,7 +145,17 @@ describe('GET /delete/:id', () => {
         request(app)
             .get('/delete/1')
             .expect(200)
-            .end(done);
+            .end((err, res) => {
+                if (err) {
+                    return done(err);
+                }
+
+                // Check if deletion worked
+                Model.find({id: 1}).then((data) => {
+                    expect(data.length).toBe(0);
+                    done();
+                }).catch((e) => done(e));
+            });
     });
 
     it('should reject invalid id', (done) => {
