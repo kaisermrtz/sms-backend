@@ -36,6 +36,7 @@ app.get('/', async(req, res) => {
 app.post('/add', async(req, res) => {
     console.log('POST /add');
     try {
+        validateDataPoint(req.body);
         const data = new Model(req.body);
         await data.save()
         res.send(data);
@@ -48,6 +49,7 @@ app.post('/add', async(req, res) => {
 app.post('/update/:id', async(req, res) => {
     console.log('POST /update');
     try {
+        validateDataPoint(req.body)
         const data = await Model.findOneAndUpdate({id: req.params.id}, {$set: req.body}, {new: true});
         res.send(data);
     } catch (error) {
@@ -60,11 +62,22 @@ app.get('/delete/:id', async(req, res) => {
     console.log('Post /delete');
     try {
         const data = await Model.findOneAndRemove({id: req.params.id});
+        if (!data) {
+            throw 'Invalid id'
+        }
         res.send(data);
     } catch (error) {
         res.status(400).send(error);
     }
 });
+
+const validateDataPoint = (dataPoint) => {
+    const newData = new Model(dataPoint);
+    var error = newData.validateSync();
+    if (error) {
+        throw error
+    }
+};
 
 app.listen(port, () => {
     console.log(`Started up at port ${port}`);
