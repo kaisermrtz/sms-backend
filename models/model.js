@@ -26,7 +26,8 @@ var Model = mongoose.model('Model', {
     },
     status: {
         type: String,
-        required: true
+        required: true,
+        enum: ['Yearly', 'Monthly', 'Weekly', 'Daily', 'Often', 'Once', 'Seldom', 'Never']
     },
     color: {
         type: String,
