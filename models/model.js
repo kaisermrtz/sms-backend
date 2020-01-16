@@ -31,7 +31,8 @@ var Model = mongoose.model('Model', {
     },
     color: {
         type: String,
-        required: true
+        required: true,
+        validate: /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/
     }
 });
 
