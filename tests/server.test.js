@@ -48,6 +48,22 @@ describe('GET /', () => {
     });
 });
 
+describe('GET /:id', () => {
+    it('should return a single datapoint', (done) => {
+        request(app)
+            .get('/1')
+            .expect(200)
+            .end(done);
+    });
+
+    it('should reject invalid id', (done) => {
+        request(app)
+            .get('/5291')
+            .expect(400)
+            .end(done);
+    });
+});
+
 describe('POST /add', () => {
     it('should add a datapoint', (done) => {
         request(app)
