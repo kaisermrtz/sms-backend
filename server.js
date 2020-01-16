@@ -12,6 +12,10 @@ var app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    next();
+});
 
 seedDatabase(() => {
     console.log('Database seeded');
