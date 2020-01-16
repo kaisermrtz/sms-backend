@@ -17,9 +17,12 @@ app.use((req, res, next) => {
     next();
 });
 
-seedDatabase(() => {
-    console.log('Database seeded');
-});
+// Only seed database if not in test mode
+if (process.env.NODE_ENV !== "test") {
+    seedDatabase(() => {
+        console.log('Database seeded');
+    });
+}
 
 // GET /
 app.get('/', async(req, res) => {
@@ -82,3 +85,5 @@ const validateDataPoint = (dataPoint) => {
 app.listen(port, () => {
     console.log(`Started up at port ${port}`);
 });
+
+module.exports = {app};
