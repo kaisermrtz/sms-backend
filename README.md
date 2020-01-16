@@ -40,11 +40,24 @@ cd mongo/bin
 node server.js
 ```
 
+## Test
+
+1) Shut down server
+2) Run 
+
+```
+npm test
+```
+
 ## Usage
 
 ### GET /
 
 Get an array of all data entries
+
+### GET /:id
+
+Get a single datapoint by id
 
 ### POST /add
 
@@ -67,6 +80,8 @@ Returns the added object.
 
 Updates an entry by id and returns the updated object.
 Post a json like for `POST /add`
+
+Note: All fields are required
 
 ### GET /delete/:id
 
